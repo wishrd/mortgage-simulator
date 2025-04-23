@@ -4,8 +4,6 @@ import { Mortgage } from '@core/models/mortgage';
 import { MortgageDataService } from '@core/services/mortgage.data-service';
 
 export const mortgageDetailResolver: ResolveFn<Mortgage | null> = async ({ params }) => {
-  console.log('mortgageDetailResolver');
-
   const mortgageId = params['id'] as string;
   if (!mortgageId) {
     throw new Error('Missing "id" URL parameter');

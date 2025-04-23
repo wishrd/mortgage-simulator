@@ -1,3 +1,5 @@
+/// <reference lib="webworker" />
+
 import { formatDate } from '@angular/common';
 import type { Mortgage } from '@core/models/mortgage';
 import type { MortgagePlan, MortgagePlanAmortization } from '@core/models/mortgage-plan';
