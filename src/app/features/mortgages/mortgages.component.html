@@ -1,0 +1,10 @@
+<div class="space-y-4">
+  <div class="flex justify-between items-center p-4">
+    <a class="btn btn-primary" routerLink="/mortgages/new">Add</a>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 pb-6">
+    @for (mortgage of mortgages(); track mortgage.id) {
+      <app-mortgage-card [mortgage]="mortgage" />
+    }
+  </div>
+</div>

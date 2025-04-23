@@ -1,0 +1,27 @@
+<a class="card bg-base-100 shadow-xl cursor-pointer group" (click)="onDetail($event)">
+  <div class="card-body">
+    <div class="flex justify-between items-center">
+      <h2 class="card-title">{{ mortgage().name }}</h2>
+      <a
+        id="edit"
+        class="btn btn-ghost btn-circle text-primary hover:bg-primary hover:text-primary-content"
+        [routerLink]="'/mortgages/' + mortgage().id + '/edit'"
+        aria-label="Edit mortgage"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </a>
+    </div>
+    <div class="grid grid-cols-2 gap-4 mt-4">
+      <div>
+        <p class="text-sm text-gray-500">Amount</p>
+        <p class="font-semibold">{{ mortgage().amount | currency : mortgage().currency }}</p>
+      </div>
+      <div>
+        <p class="text-sm text-gray-500">Quotes</p>
+        <p class="font-semibold">{{ mortgage().quotes }}</p>
+      </div>
+    </div>
+  </div>
+</a>

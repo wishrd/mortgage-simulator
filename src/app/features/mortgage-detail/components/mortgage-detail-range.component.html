@@ -1,0 +1,29 @@
+<div class="mt-6 mb-6">
+  <div class="flex justify-between">
+    <span>{{ label() }}</span>
+    <span>
+       @if (template()) {
+        <ng-container *ngTemplateOutlet="template()!; context: { $implicit: main() }"></ng-container>
+       } @else {
+        {{ main() }}
+       }
+    </span>
+  </div>
+  <progress class="progress" [class.progress-primary]="highlight()" [value]="right() > 0 ? (left() * 100) / right() : 100" max="100"></progress>
+  <div class="flex justify-between text-sm">
+    <span>
+      @if (template()) {
+        <ng-container *ngTemplateOutlet="template()!; context: { $implicit: left() }"></ng-container>
+       } @else {
+        {{ left() }}
+       }
+    </span>
+    <span>
+      @if (template()) {
+        <ng-container *ngTemplateOutlet="template()!; context: { $implicit: right() }"></ng-container>
+       } @else {
+        {{ right() }}
+       }
+    </span>
+  </div>
+</div>

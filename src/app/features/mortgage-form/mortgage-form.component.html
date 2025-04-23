@@ -1,0 +1,170 @@
+<div class="flex flex-col h-full">
+  <div class="p-4">
+    <div class="flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Edit mortgage</h1>
+      @if (mortgage()) {
+        <button
+          class="btn btn-sm btn-ghost btn-circle text-error hover:bg-error hover:text-error-content"
+          aria-label="Delete mortgage"
+          onclick="deleteModal.showModal()"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+        </button>
+        <dialog id="deleteModal" class="modal modal-bottom sm:modal-middle">
+          <div class="modal-box">
+            <h3 class="text-lg font-bold">Confirm!</h3>
+            <p class="py-4">Are you sure you want to delete this mortgage?</p>
+            <div class="modal-action">
+              <form method="dialog" class="flex justify-end gap-4">
+                <button class="btn">Cancel</button>
+                <button class="btn btn-error" (click)="onDelete()">Confirm</button>
+              </form>
+            </div>
+          </div>
+        </dialog>
+      }
+    </div>
+  </div>
+  <div class="flex-1 overflow-y-auto p-4 pb-24">
+    <form id="mortgage-detail-form" class="space-y-6" [formGroup]="mortgageForm" (ngSubmit)="onSubmit()">
+      <div class="space-y-2">
+        <label for="name" class="block text-sm font-medium">Name</label>
+        <input
+          type="text"
+          id="name"
+          class="input input-bordered w-full"
+          formControlName="name"
+          aria-required="true"
+          aria-describedby="name-description"
+        />
+        <p id="name-description" class="text-sm text-gray-500 mt-1">Name of the mortgage configuration</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="system" class="block text-sm font-medium">System</label>
+        <select
+          id="system"
+          class="select select-bordered w-full"
+          formControlName="system"
+          aria-describedby="system-description"
+        >
+          @for (strategy of ['french']; track strategy) {
+            <option [value]="strategy">{{ strategy }}</option>
+          }
+        </select>
+        <p id="system-description" class="text-sm text-gray-500 mt-1">Amortization calculation system</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="interval" class="block text-sm font-medium">Interval</label>
+        <select
+          id="interval"
+          class="select select-bordered w-full"
+          formControlName="interval"
+          aria-describedby="interval-description"
+        >
+          @for (interval of ['monthly']; track interval) {
+            <option [value]="interval">{{ interval }}</option>
+          }
+        </select>
+        <p id="interval-description" class="text-sm text-gray-500 mt-1">Amortization interval</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="interest-type" class="block text-sm font-medium">Interest type</label>
+        <select
+          id="interest-type"
+          class="select select-bordered w-full"
+          formControlName="interestType"
+          aria-describedby="interest-type-description"
+        >
+          @for (interestType of ['fixed']; track interestType) {
+            <option [value]="interestType">{{ interestType }}</option>
+          }
+        </select>
+        <p id="interest-type-description" class="text-sm text-gray-500 mt-1">Interest type applied to each amortization</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="base-interest" class="block text-sm font-medium">Interest rate</label>
+        <input
+          type="number"
+          id="base-interest"
+          class="input input-bordered w-full"
+          min="0"
+          step="0.01"
+          formControlName="baseInterest"
+          aria-required="true"
+          aria-describedby="base-interest-description"
+        />
+        <p id="base-interest-description" class="text-sm text-gray-500 mt-1">Base or fixed interest rate</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="amount" class="block text-sm font-medium">Amount</label>
+        <input
+          type="number"
+          id="amount"
+          class="input input-bordered w-full"
+          min="0"
+          step="0.01"
+          formControlName="amount"
+          aria-required="true"
+          aria-describedby="amount-description"
+        />
+        <p id="amount-description" class="text-sm text-gray-500 mt-1">Total amount of the mortgage without interests</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="currency" class="block text-sm font-medium">Currency</label>
+        <select
+          id="currency"
+          class="select select-bordered w-full"
+          formControlName="currency"
+          aria-describedby="currency-description"
+        >
+          @for (currency of ['EUR', 'USD']; track currency) {
+            <option [value]="currency">{{ currency }}</option>
+          }
+        </select>
+        <p id="currency-description" class="text-sm text-gray-500 mt-1">Interest type applied to each amortization</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="quotes" class="block text-sm font-medium">Quotes</label>
+        <input
+          type="number"
+          id="quotes"
+          class="input input-bordered w-full"
+          min="0"
+          step="1"
+          formControlName="quotes"
+          aria-required="true"
+          aria-describedby="quotes-description"
+        />
+        <p id="quotes-description" class="text-sm text-gray-500 mt-1">Total quotes of the mortgage without interests</p>
+      </div>
+
+      <div class="space-y-2">
+        <label for="vestingDate" class="block text-sm font-medium">Vesting Date</label>
+        <input
+          type="date"
+          id="startDate"
+          class="input input-bordered w-full"
+          formControlName="startDate"
+          aria-required="true"
+          aria-describedby="start-date-description"
+        />
+        <p id="start-date-description" class="text-sm text-gray-500 mt-1">Start date of the mortgage amortization</p>
+      </div>
+    </form>
+  </div>
+  <div class="fixed bottom-0 left-0 right-0 bg-base-100 border-t border-base-300 py-4 px-4">
+    <div class="flex justify-end gap-4">
+      <a routerLink="/mortgages" class="btn btn-ghost">Cancel</a>
+      <button type="submit" form="mortgage-detail-form" class="btn btn-primary">Save</button>
+    </div>
+  </div>
+</div>
