@@ -27,7 +27,7 @@
       [left]="plan.value()!.results.currentTotalAmortization + plan.value()!.results.currentTotalInterests"
       [right]="plan.value()!.results.totalWithInterests - (plan.value()!.results.currentTotalAmortization + plan.value()!.results.currentTotalInterests)"
       [template]="rangeCurrencyValue"
-      [highlight]="true"
+      highlight="primary"
     >
     </app-mortgage-detail-range>
     <app-mortgage-detail-range
@@ -36,6 +36,7 @@
       [left]="plan.value()!.results.currentTotalAmortization"
       [right]="mortgage().amount - plan.value()!.results.currentTotalAmortization"
       [template]="rangeCurrencyValue"
+      highlight="success"
     ></app-mortgage-detail-range>
     <app-mortgage-detail-range
       label="Interests"
@@ -43,6 +44,7 @@
       [left]="plan.value()!.results.currentTotalInterests"
       [right]="plan.value()!.results.totalInterests - plan.value()!.results.currentTotalInterests"
       [template]="rangeCurrencyValue"
+      highlight="error"
     ></app-mortgage-detail-range>
     <app-mortgage-detail-range
       label="Quotas"

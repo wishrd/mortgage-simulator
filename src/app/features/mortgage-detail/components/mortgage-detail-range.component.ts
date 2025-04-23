@@ -12,6 +12,6 @@ export class MortgageDetailRangeComponent {
   main = input.required<number>();
   left = input.required<number>();
   right = input.required<number>();
-  highlight = input<boolean>(false);
+  highlight = input<string>();
   template = input<TemplateRef<unknown>>();
 }

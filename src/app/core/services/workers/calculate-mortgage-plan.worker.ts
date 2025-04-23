@@ -22,6 +22,7 @@ function calculateMortgagePlan(mortgage: Mortgage): MortgagePlan {
   let currentTotalInterests = 0;
   let currentQuota = 0;
   let currentTotalAmortization = 0;
+  let currentTotalPartialAmortizations = 0;
 
   let index = 0
   for (; index < mortgage.quotes && total > 0; index++) {
@@ -36,6 +37,7 @@ function calculateMortgagePlan(mortgage: Mortgage): MortgagePlan {
       totalPartialAmortizations = mortgage.amortizations.find(a => a.date === dateStr)?.amount || 0;
       currentQuota = index + 1;
       currentTotalAmortization += quotaAmortization;
+      currentTotalPartialAmortizations += totalPartialAmortizations;
     } else {
       totalPartialAmortizations = mortgage.amortizationConfigurations
         .filter(partialAmortization => {
@@ -91,7 +93,7 @@ function calculateMortgagePlan(mortgage: Mortgage): MortgagePlan {
     currentTotalInterests: currentTotalInterests,
     totalInterests: totalQuotaInterests,
     totalWithInterests: totalQuotaInterests + mortgage.amount,
-    currentTotalAmortization: currentTotalAmortization,
+    currentTotalAmortization: currentTotalAmortization + currentTotalPartialAmortizations,
   };
 
   return {
