@@ -33,6 +33,7 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/mortgage-simulator/",
               "budgets": [
                 {
                   "type": "initial",
