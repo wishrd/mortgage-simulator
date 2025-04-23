@@ -91,7 +91,9 @@
     ></app-mortgage-detail-add-amortization-form>
     <div class="modal-action">
       <button class="btn btn-primary" type="submit" form="mortgage-detail-form">Save</button>
-      <button class="btn btn-error" (click)="onDeletePartialAmortization(selectedAmortization()!)">Delete</button>
+      @if (mortgage() | hasAmortization : selectedAmortization()?.date) {
+        <button class="btn btn-error" (click)="onDeletePartialAmortization(selectedAmortization()!)">Delete</button>
+      }
     </div>
   </div>
   <form method="dialog" class="modal-backdrop">

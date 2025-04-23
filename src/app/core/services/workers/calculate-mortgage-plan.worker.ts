@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import { formatDate } from '@angular/common';
+import { format } from 'date-fns';
 import type { Mortgage } from '@core/models/mortgage';
 import type { MortgagePlan, MortgagePlanAmortization } from '@core/models/mortgage-plan';
 
@@ -27,7 +27,7 @@ function calculateMortgagePlan(mortgage: Mortgage): MortgagePlan {
   for (; index < mortgage.quotes && total > 0; index++) {
     const quotaNumber = index + 1;
     const quotaInterest = total * interestRatio;
-    const dateStr = formatDate(date, 'yyyy-MM-dd', 'en-US');
+    const dateStr = format(date, 'yyyy-MM-dd');
     let quotaAmortization = quota - quotaInterest;
 
     let totalPartialAmortizations = 0

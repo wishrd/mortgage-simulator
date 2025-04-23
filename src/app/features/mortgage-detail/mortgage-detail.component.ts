@@ -8,11 +8,12 @@ import { MortgageDetailTimelineItemComponent } from "./components/mortgage-detai
 import { MortgagePlanAmortization } from '@core/models/mortgage-plan';
 import { MortgageDataService } from '@core/services/mortgage.data-service';
 import { MortgageDetailAddAmortizationFormComponent } from "./components/mortgage-detail-add-amortization-form.component";
+import { HasAmortizationPipe } from './pipes/has-amortization';
 
 @Component({
   selector: 'app-mortgage-detail',
   templateUrl: './mortgage-detail.component.html',
-  imports: [CurrencyPipe, MortgageDetailRangeComponent, MortgageDetailTimelineItemComponent, MortgageDetailAddAmortizationFormComponent],
+  imports: [CurrencyPipe, MortgageDetailRangeComponent, MortgageDetailTimelineItemComponent, MortgageDetailAddAmortizationFormComponent, HasAmortizationPipe],
 })
 export class MortgageDetailComponent {
   @ViewChild('addPartialAmortizationDialog') private readonly addPartialAmortizationDialog!: ElementRef<HTMLDialogElement>;
@@ -37,7 +38,7 @@ export class MortgageDetailComponent {
     const mortgage = this.mortgage();
     const amortizations = mortgage.amortizations.map(a => ({ ...a }));
     const existingAmortization = amortizations.find(a => a.date === amortization.date);
-    this.selectedAmortization.set(existingAmortization);
+    this.selectedAmortization.set(existingAmortization || { date: amortization.date, amount: 0 });
     this.addPartialAmortizationDialog.nativeElement.showModal();
   }
 

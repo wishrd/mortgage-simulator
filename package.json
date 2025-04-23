@@ -20,6 +20,7 @@
     "@tailwindcss/postcss": "^4.1.4",
     "@tanstack/angular-query-experimental": "^5.74.4",
     "daisyui": "^5.0.27",
+    "date-fns": "^4.1.0",
     "dexie": "^4.0.11",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.2",
