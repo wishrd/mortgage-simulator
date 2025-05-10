@@ -1,4 +1,4 @@
-<div class="p-4">
+<div class="p-4 pb-24">
   <div class="flex mb-2">
     <h1 class="text-2xl font-bold">{{ mortgage().name }}</h1>
   </div>
@@ -76,6 +76,19 @@
       }
     </ul>
   }
+
+  <div class="fixed bottom-4 right-4 flex flex-col gap-2 items-center">
+    <button class="btn btn-circle btn-soft btn-sm btn-secondary" (click)="amortizationConfigurationsDialog.showModal()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+    </button>
+    <button class="btn btn-circle btn-secondary" (click)="openAddPartialAmortizationForm()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    </button>
+  </div>
 </div>
 
 <dialog #addPartialAmortizationDialog class="modal modal-bottom sm:modal-middle">
@@ -87,16 +100,35 @@
       </form>
     </div>
     <app-mortgage-detail-add-amortization-form
-      formId="mortgage-detail-form"
+      formId="add-amortization-form"
       [amortization]="selectedAmortization()"
       (onSave)="onSavePartialAmortization(selectedAmortization()!, $event)"
     ></app-mortgage-detail-add-amortization-form>
     <div class="modal-action">
-      <button class="btn btn-primary" type="submit" form="mortgage-detail-form">Save</button>
+      <button class="btn btn-primary" type="submit" form="add-amortization-form">Save</button>
       @if (mortgage() | hasAmortization : selectedAmortization()?.date) {
         <button class="btn btn-error" (click)="onDeletePartialAmortization(selectedAmortization()!)">Delete</button>
       }
     </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button>Close</button>
+  </form>
+</dialog>
+
+<dialog #amortizationConfigurationsDialog class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <div class="flex justify-between items-center mb-4">
+      <h3 class="text-lg font-bold">Scheduled amortizations</h3>
+      <form class="contents" method="dialog">
+        <button class="btn text-lg btn-sm btn-circle btn-ghost">✕</button>
+      </form>
+    </div>
+    <app-mortgage-detail-amortization-configurations-form
+      [mortgage]="mortgage()"
+      [configurations]="mortgage().amortizationConfigurations"
+      (onSave)="onSaveAmortizationConfiguration($event)"
+    ></app-mortgage-detail-amortization-configurations-form>
   </div>
   <form method="dialog" class="modal-backdrop">
     <button>Close</button>

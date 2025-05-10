@@ -4,9 +4,9 @@ export interface MortgageAmortizationData {
 }
 
 export interface MortgageAmortizationConfigurationData {
-  from: number;
-  to: number;
-  step: number;
+  startDate: string;
+  endDate: string;
+  periodStep: number;
   amount: number;
 }
 
