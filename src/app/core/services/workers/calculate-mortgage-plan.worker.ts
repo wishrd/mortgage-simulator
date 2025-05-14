@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-import { format } from 'date-fns';
+import { format, differenceInMonths, differenceInDays } from 'date-fns';
 import type { Mortgage } from '@core/models/mortgage';
 import type { MortgagePlan, MortgagePlanAmortization } from '@core/models/mortgage-plan';
 
@@ -41,10 +41,13 @@ function calculateMortgagePlan(mortgage: Mortgage): MortgagePlan {
     } else {
       totalPartialAmortizations = mortgage.amortizationConfigurations
         .filter(partialAmortization => {
-          if (partialAmortization.from === partialAmortization.to) {
-            return partialAmortization.from === quotaNumber
-          } else if (partialAmortization.from <= quotaNumber && (!partialAmortization.to || partialAmortization.to >= quotaNumber)) {
-            return (quotaNumber - partialAmortization.from) % partialAmortization.step === 0
+          const start = new Date(partialAmortization.startDate);
+          const end = new Date(partialAmortization.endDate);
+
+          if (differenceInMonths(end, start) === 0) {
+            return partialAmortization.startDate === dateStr;
+          } else if (differenceInDays(date, start) > 0 && differenceInDays(end, date) >= 0) {
+            return differenceInMonths(date, start) % partialAmortization.periodStep === 0;
           }
 
           return false;

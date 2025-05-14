@@ -78,7 +78,7 @@
   }
 
   <div class="fixed bottom-4 right-4 flex flex-col gap-2 items-center">
-    <button class="btn btn-circle btn-soft btn-sm btn-secondary" (click)="amortizationConfigurationsDialog.showModal()">
+    <button class="btn btn-circle btn-soft btn-sm btn-secondary" (click)="openAmortizationConfigurationsForm()">
       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
       </svg>
@@ -124,10 +124,11 @@
         <button class="btn text-lg btn-sm btn-circle btn-ghost">✕</button>
       </form>
     </div>
-    <app-mortgage-detail-amortization-configurations-form
+    <app-mortgage-detail-amortization-configurations-form #amortizationConfigurationsForm
       [mortgage]="mortgage()"
       [configurations]="mortgage().amortizationConfigurations"
       (onSave)="onSaveAmortizationConfiguration($event)"
+      (onDelete)="onDeleteAmortizationConfiguration($event)"
     ></app-mortgage-detail-amortization-configurations-form>
   </div>
   <form method="dialog" class="modal-backdrop">

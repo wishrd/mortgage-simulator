@@ -20,6 +20,7 @@ import { MortgageDetailAmortizationConfigurationsFormComponent } from './compone
 export class MortgageDetailComponent {
   @ViewChild('addPartialAmortizationDialog') private readonly addPartialAmortizationDialog!: ElementRef<HTMLDialogElement>;
   @ViewChild('amortizationConfigurationsDialog') private readonly amortizationConfigurationsDialog!: ElementRef<HTMLDialogElement>;
+  @ViewChild('amortizationConfigurationsForm') private readonly amortizationConfigurationsForm!: MortgageDetailAmortizationConfigurationsFormComponent;
 
   private readonly mortgagePlanService = inject(MortgagePlanService);
   private readonly mortgageDataService = inject(MortgageDataService);
@@ -74,9 +75,26 @@ export class MortgageDetailComponent {
     this.addPartialAmortizationDialog.nativeElement.close();
   }
 
-  async onSaveAmortizationConfiguration(configuration: MortgageAmortizationConfiguration) {
+  openAmortizationConfigurationsForm(): void {
+    this.amortizationConfigurationsForm.clear();
+    this.amortizationConfigurationsDialog.nativeElement.showModal();
+  }
+
+  async onSaveAmortizationConfiguration(configuration: { index: number | null, value: MortgageAmortizationConfiguration }): Promise<void> {
     const mortgage = this.mortgage();
-    const amortizationConfigurations = mortgage.amortizationConfigurations.concat(configuration);
+    const amortizationConfigurations = configuration.index === null
+      ? mortgage.amortizationConfigurations.concat(configuration.value)
+      : mortgage.amortizationConfigurations.map((value, index) => index === configuration.index ? configuration.value : value);
+    const updatedMortgage = { ...mortgage, amortizationConfigurations };
+    this.mortgagePlanService.remove(updatedMortgage);
+    await this.mortgageDataService.save(updatedMortgage);
+    this.mortgage.set(updatedMortgage);
+    this.amortizationConfigurationsDialog.nativeElement.close();
+  }
+
+  async onDeleteAmortizationConfiguration(index: number): Promise<void> {
+    const mortgage = this.mortgage();
+    const amortizationConfigurations = mortgage.amortizationConfigurations.filter((_, i) => i !== index);
     const updatedMortgage = { ...mortgage, amortizationConfigurations };
     this.mortgagePlanService.remove(updatedMortgage);
     await this.mortgageDataService.save(updatedMortgage);
