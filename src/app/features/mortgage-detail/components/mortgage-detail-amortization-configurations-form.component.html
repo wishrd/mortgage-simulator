@@ -59,7 +59,9 @@
   </div>
 
   <div class="modal-action">
-    <button class="btn btn-outline" type="button" (click)="onCancel()">Cancel</button>
+    @if (index() !== null) {
+      <button class="btn btn-outline" type="button" (click)="onCancel()">Cancel</button>
+    }
     <button class="btn btn-primary">Save</button>
     <button class="btn btn-error" type="button" (click)="remove()">Delete</button>
   </div>
